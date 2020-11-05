@@ -83,7 +83,7 @@ const Login = ({ setIsLogin }) => {
             onChange={onChangeInput}
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" className = "BIGLOGIN">Login</button>
          
           <p>
             Don't Have an Account?
