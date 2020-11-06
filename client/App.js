@@ -8,6 +8,10 @@ function App() {
 	const [isLogin, setIsLogin] = useState(false);
 
 	useEffect(() => {
+		
+
+
+
 		//check if a user is logged in successfully
 		const checkLogin = async () => {
 			//get the token from local storage
@@ -38,6 +42,7 @@ function App() {
 			) : (
 				<Login setIsLogin={setIsLogin} />
 			)}
+			 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 		</div>
 	);
 }

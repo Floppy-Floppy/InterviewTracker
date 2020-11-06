@@ -3,19 +3,27 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 const cors = require('cors');
+const passport = require('passport');
+const googleOauth = require('./googleOauth.js');
 const mongoose = require('mongoose');
+
+
+// passport oAuth initialization
+googleOauth(passport);
 
 /*----requiring routers----*/
 const userRouter = require('./routers/userRouter');
 const tasksRouter = require('./routers/tasksRouter');
 const jobListRouter = require('./routers/jobListRouter');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const googleController = require('./controllers/googleController.js');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static('build'));
 app.use(express.urlencoded())
+app.use(passport.initialize());
 //load config file
 dotenv.config({ path: './config/config.env' });
 
@@ -49,6 +57,30 @@ connectDB();
 app.get('/', (req, res) => {
 	res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
 });
+
+app.get('/google', passport.authenticate('google', {
+	scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+}));
+app.get('/google/callback',
+	passport.authenticate('google', {
+			failureRedirect: '/'
+	}),
+
+	// (req, res, next) => {
+	// 	console.log("hey there");
+	// 	next()
+	// },
+	googleController.userGoogleLogin,
+	// (req, res) => {
+	// 	// console.log(res.locals.json)
+	// 	console.log(req.user.profile.emails[0].value);
+	// 	res.redirect('/');
+	// }
+);
+
+
+ 
+
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) => res.sendStatus(404));
