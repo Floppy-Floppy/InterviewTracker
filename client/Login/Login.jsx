@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import regeneratorRuntime from 'regenerator-runtime';
+import GoogleLogin from 'react-google-login'
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 const Login = ({ setIsLogin }) => {
@@ -7,6 +9,10 @@ const Login = ({ setIsLogin }) => {
   //setting up for errors are optional and can be deleted
   const [user, setUser] = useState({ name: '', email: '', password: '' });
   const [err, setErr] = useState('');
+
+  const onGoogleClick = () => {
+    fetch();
+  }
 
   //tracking key/value pairs by accessing value (check out the function return with the elements you'll see "value")
   const onChangeInput = (e) => {
@@ -67,7 +73,7 @@ const Login = ({ setIsLogin }) => {
             name="email"
             id="login-email"
             placeholder="Email"
-            required
+            
             value={user.email}
             onChange={onChangeInput}
           />
@@ -77,13 +83,13 @@ const Login = ({ setIsLogin }) => {
             name="password"
             id="login-password"
             placeholder="Password"
-            required
             value={user.password}
             autoComplete="true"
             onChange={onChangeInput}
           />
 
           <button type="submit" className = "BIGLOGIN">Login</button>
+          <button className="google-button"><a href="http://localhost:8080/google">Log In with Google</a></button>
          
           <p>
             Don't Have an Account?
@@ -99,8 +105,7 @@ const Login = ({ setIsLogin }) => {
             type="text"
             name="name"
             id="register-name"
-            placeholder="User Name"
-            required
+            placeholder = "name"
             value={user.name}
             onChange={onChangeInput}
           />
@@ -110,7 +115,6 @@ const Login = ({ setIsLogin }) => {
             name="email"
             id="register-email"
             placeholder="Email"
-            required
             value={user.email}
             onChange={onChangeInput}
           />
@@ -120,19 +124,20 @@ const Login = ({ setIsLogin }) => {
             name="password"
             id="register-password"
             placeholder="Password"
-            required
             value={user.password}
             autoComplete="true"
             onChange={onChangeInput}
           />
 
-          <button type="submit">Sign Up</button>
+          <button type="submit">Sign up</button>
+          <button className="google-button"><a href="http://localhost:8080/google">Sign Up with Google</a></button>
           <p>
             You have an account?
             <span onClick={() => setOnLogin(false)}> Login</span>
           </p>
           <h3>{err}</h3>
         </form>
+
       </div>
     </div>
   );

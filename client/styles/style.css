@@ -17,6 +17,11 @@ a {
 	text-decoration: none;
 }
 
+button.google-button a {
+	color: black !important;
+	height: 20px !important;
+}
+
 .logout {
 	font-size: 20px;
 	margin-left: 800px;
